@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F&H - Coin Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        button {
+            padding: 10px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+        }
+
+        video {
+            display: none;
+            width: 1000px; /* Ajusta el ancho del video según tu preferencia */
+            height: 450px; /* Ajusta el alto del video según tu preferencia */
+        }
+    </style>
+</head>
+<body>
+
+<button id="headsButton" onclick="flipCoin('heads')">HEADS</button>
+<button id="tailsButton" onclick="flipCoin('tails')">TAILS</button>
+
+<video id="headsVideo" preload="auto">
+    <source src="media/cara.mp4" type="video/mp4">
+    Tu navegador no soporta el tag de video.
+</video>
+
+<video id="tailsVideo" preload="auto">
+    <source src="media/cruz.mp4" type="video/mp4">
+    Tu navegador no soporta el tag de video.
+</video>
+
+<script>
+    function flipCoin(result) {
+        // Oculta los botones
+        document.getElementById('headsButton').style.display = 'none';
+        document.getElementById('tailsButton').style.display = 'none';
+        // Elige aleatoriamente el video en un 50%
+        var videoElement;
+        var random = Math.random();
+        if (random < 0.5) {
+            videoElement = document.getElementById('headsVideo');
+        } else {
+            videoElement = document.getElementById('tailsVideo');
+        }
+        // Muestra el video seleccionado
+        videoElement.style.display = 'block';
+        videoElement.play();
+        // Asigna un evento al finalizar el video para volver a mostrar los botones
+        function onVideoEnded() {
+            videoElement.style.display = 'none';
+            document.getElementById('headsButton').style.display = 'block';
+            document.getElementById('tailsButton').style.display = 'block';
+            // Elimina el evento 'ended' después de reproducir el video una vez
+            videoElement.removeEventListener('ended', onVideoEnded);
+			location.reload();
+        }
+        // Asigna el evento 'ended'
+        videoElement.addEventListener('ended', onVideoEnded);
+    }
+</script
+
+</body>
+</html>
